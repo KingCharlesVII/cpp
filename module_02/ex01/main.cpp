@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 class Fixed {
     private:
@@ -11,12 +12,13 @@ class Fixed {
         Fixed(const float toConvert);
         ~Fixed();
         Fixed& operator=(const Fixed& fixed);
-        void    operator<<(void) const;
         int getRawBits(void) const;
         void setRawBits(const int raw);
         float toFloat(void) const;
         int toInt(void) const;
-};
+    };
+    
+std::ostream& operator<<(std::ostream &os, const Fixed &fixed);
 
 Fixed::Fixed() {
     std::cout << "Default constructor called" << std::endl;
@@ -31,11 +33,19 @@ int Fixed::getRawBits(void) const {
 void Fixed::setRawBits(const int raw) {
     this->fixedPointValue = raw;
 }
-s
+
 Fixed&  Fixed::operator=(const Fixed& fixed) {
     std::cout << "Copy asignment operator called" << std::endl;
     this->setRawBits(fixed.getRawBits());
     return (*this);
+}
+
+float   Fixed::toFloat(void) const {
+    return ((float)this->fixedPointValue / (1 << this->fractionalBits));
+}
+
+int Fixed::toInt(void) const {
+    return (this->fixedPointValue >> this->fractionalBits);
 }
 
 Fixed::Fixed(const Fixed& fixed) {
@@ -45,37 +55,36 @@ Fixed::Fixed(const Fixed& fixed) {
 
 Fixed::Fixed(const int toConvert) {
     std::cout << "Int constuctor called" << std::endl;
-    (void)toConvert;
+    this->fixedPointValue = toConvert << this->fractionalBits;
 }
 
 Fixed::Fixed(const float toConvert) {
     std::cout << "Float constructor called" << std::endl;
-    (void)toConvert;
+    this->fixedPointValue = roundf(toConvert * (1 << this->fractionalBits));
 }
 
 Fixed::~Fixed() {
     std::cout << "Destructor called" << std::endl;
 }
 
-float   Fixed::toFloat(void) const {
-    return (0.0);
-}
-
-int Fixed::toInt(void) const {
-    return (0);
-}
-
-void    Fixed::operator<<(void) const {
-
+std::ostream& operator<<(std::ostream &os, const Fixed &fixed) {
+    os << fixed.toFloat();
+    return (os);
 }
 
 int     main(void) {
     Fixed a;
-    Fixed b(a);
-    Fixed c;
-
-    c = b;
-    std::cout << a.getRawBits() << std::endl;
-    std::cout << b.getRawBits() << std::endl;
-    std::cout << c.getRawBits() << std::endl;
+    Fixed const b( 10 );
+    Fixed const c( 42.42f );
+    Fixed const d( b );
+    a = Fixed( 1234.4321f );
+    std::cout << "a is " << a << std::endl;
+    std::cout << "b is " << b << std::endl;
+    std::cout << "c is " << c << std::endl;
+    std::cout << "d is " << d << std::endl;
+    std::cout << "a is " << a.toInt() << " as integer" << std::endl;
+    std::cout << "b is " << b.toInt() << " as integer" << std::endl;
+    std::cout << "c is " << c.toInt() << " as integer" << std::endl;
+    std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+    return 0;
 }
