@@ -18,6 +18,10 @@ class Fixed {
         bool    operator<=(const Fixed &fixed) const;
         bool operator==(const Fixed& fixed) const;
         bool operator!=(const Fixed& fixed) const;
+        Fixed& operator++(void);
+        Fixed operator++(int);
+        Fixed& operator--(void);
+        Fixed operator--(int);
         int getRawBits(void) const;
         void setRawBits(const int raw);
         int getFractionalBits(void) const;
@@ -33,8 +37,6 @@ const Fixed operator+(const Fixed& a, const Fixed& b);
 const Fixed operator-(const Fixed& a, const Fixed& b);
 const Fixed operator/(const Fixed& a, const Fixed& b);
 const Fixed operator*(const Fixed&a, const Fixed& b);
-void operator++(Fixed& fixed);
-void operator--(Fixed& fixed);
 
 std::ostream& operator<<(std::ostream &os, const Fixed &fixed);
 
@@ -121,30 +123,32 @@ int Fixed::getFractionalBits(void) const {
 const Fixed operator+(const Fixed& a, const Fixed& b) {
     Fixed addition;
 
-    addition.setRawBits(a.toFloat() + b.toFloat());
+    addition.setRawBits(a.getRawBits() + b.getRawBits());
     return (addition);
 }
 
 const Fixed operator-(const Fixed& a, const Fixed& b) {
     Fixed substraction;
 
-    substraction.setRawBits(a.toInt() - b.toInt());
+    substraction.setRawBits(a.getRawBits() - b.getRawBits());
     return (substraction);
 }
 
 const Fixed operator/(const Fixed& a, const Fixed& b) {
     Fixed division;
 
-    if (b.toInt() == 0)
+    if (b.getRawBits() == 0) {
         std::cerr << "Division zero error" << std::endl;
-    division.setRawBits((a.toInt() / b.toInt()) / (1 << division.getFractionalBits()));
+        return (division);
+    }
+    division.setRawBits((a.getRawBits() * (1 << division.getFractionalBits())) / b.getRawBits()) ;
     return (division);
 }
 
 const Fixed operator*(const Fixed&a, const Fixed& b) {
     Fixed multiplication;
 
-    multiplication.setRawBits((a.toInt() * b.toInt()) * (1 << multiplication.getFractionalBits()));
+    multiplication.setRawBits((a.getRawBits() * b.getRawBits()) / (1 << multiplication.getFractionalBits()));
     return (multiplication);
 }
 
@@ -165,10 +169,37 @@ const Fixed& Fixed::max(const Fixed& a, const Fixed& b) {
     return (a > b ? a: b);
 }
 
-int     main(void) {
-    Fixed a(10);
-    Fixed b(10);
+Fixed& Fixed::operator++(void) {
+    this->fixedPointValue++;
+    return (*this);
+}
 
-    std::cout << a + b << std::endl;
+Fixed Fixed::operator++(int) {
+    Fixed result(*this);
+    this->fixedPointValue++;
+    return (result);
+}
+
+Fixed& Fixed::operator--(void) {
+    this->fixedPointValue--;
+    return (*this);
+}
+
+Fixed Fixed::operator--(int) {
+    Fixed result(*this);
+    this->fixedPointValue--;
+    return (result);
+}
+
+int main( void ) {
+    Fixed a;
+    Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+    std::cout << a << std::endl;
+    std::cout << ++a << std::endl;
+    std::cout << a << std::endl;
+    std::cout << a++ << std::endl;
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
+    std::cout << Fixed::max( a, b ) << std::endl;
     return 0;
 }
