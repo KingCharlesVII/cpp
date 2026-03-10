@@ -110,50 +110,6 @@ void    ClapTrap::attack(const std::string& target) {
     std::cout << "ClapTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
 }
 
-class ScavTrap: public ClapTrap {
-    public:
-        ScavTrap();
-        ScavTrap(const std::string& name);
-        ~ScavTrap();
-        void    attack(const std::string& target);
-        void    guardGate(void);
-};
-
-ScavTrap::ScavTrap(): ClapTrap("Default") {
-    this->setHitPoint(100);
-    this->setEnergyPoint(50);
-    this->setAttackDamage(20);
-    std::cout << "ScavTrap " << this->getName() << " constructed by default." << std::endl;
-}
-
-ScavTrap::ScavTrap(const std::string& name): ClapTrap(name) {
-    this->setHitPoint(100);
-    this->setEnergyPoint(50);
-    this->setAttackDamage(20);
-    std::cout << "ScavTrap " << this->getName() << " conctructed." << std::endl;
-}
-
-ScavTrap::~ScavTrap() {
-    std::cout << "ScavTrap " << this->getName() << " destroyed." << std::endl;
-}
-
-void    ScavTrap::attack(const std::string& target) {
-    if (this->getHitPoint() == 0) {
-        std::cout << "Scavtrap " << this->getName() << " Cannot attack due to a lack of hitpoint" << std::endl;
-        return ;
-    }
-    if (this->getEnergyPoint() == 0) {
-        std::cout << "ScavTrap " << this->getName() << "cannot attack." << std::endl;
-        return ;
-    }
-    this->setEnergyPoint(this->getEnergyPoint() - 1);
-    std::cout << "ScavTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
-}
-
-void    ScavTrap::guardGate(void) {
-    std::cout << "ScavTrap " << this->getName() << " is now keeping the gate." << std::endl;
-}
-
 int main(void) {
 
 }

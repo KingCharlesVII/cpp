@@ -154,6 +154,49 @@ void    ScavTrap::guardGate(void) {
     std::cout << "ScavTrap " << this->getName() << " is now keeping the gate." << std::endl;
 }
 
+class FragTrap: public ClapTrap {
+    public:
+        FragTrap();
+        FragTrap(const std::string& name);
+        ~FragTrap();
+        void    highFiveGuys(void);
+        void    attack(const std::string& target);
+};
+
+FragTrap::FragTrap(): ClapTrap("Default") {
+    this->setHitPoint(100);
+    this->setEnergyPoint(100);
+    this->setAttackDamage(30);
+    std::cout << "FragTrap " << this->getName() << " constructed by default." << std::endl;
+}
+
+FragTrap::FragTrap(const std::string& name): ClapTrap(name) {
+    this->setHitPoint(100);
+    this->setEnergyPoint(100);
+    this->setAttackDamage(30);
+    std::cout << "FragTrap " << this->getName() << " conctructed." << std::endl;
+}
+
+FragTrap::~FragTrap() {
+    std::cout << "FragTrap " << this->getName() << " destroyed." << std::endl;
+}
+
+void    FragTrap::attack(const std::string& target) {
+    if (this->getHitPoint() == 0) {
+        std::cout << "Fragtrap " << this->getName() << " Cannot attack due to a lack of hitpoint" << std::endl;
+        return ;
+    }
+    if (this->getEnergyPoint() == 0) {
+        std::cout << "FragTrap " << this->getName() << "cannot attack." << std::endl;
+        return ;
+    }
+    this->setEnergyPoint(this->getEnergyPoint() - 1);
+    std::cout << "FragTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
+}
+
+void FragTrap::highFiveGuys(void) {
+    std::cout << "FragTrap " << this->getName() << " has five guys." << std::endl;
+}
 int main(void) {
 
 }

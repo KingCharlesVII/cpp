@@ -110,7 +110,7 @@ void    ClapTrap::attack(const std::string& target) {
     std::cout << "ClapTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
 }
 
-class ScavTrap: public ClapTrap {
+class ScavTrap: virtual public ClapTrap {
     public:
         ScavTrap();
         ScavTrap(const std::string& name);
@@ -152,6 +152,90 @@ void    ScavTrap::attack(const std::string& target) {
 
 void    ScavTrap::guardGate(void) {
     std::cout << "ScavTrap " << this->getName() << " is now keeping the gate." << std::endl;
+}
+
+class FragTrap: virtual public ClapTrap {
+    public:
+        FragTrap();
+        FragTrap(const std::string& name);
+        ~FragTrap();
+        void    highFiveGuys(void);
+        void    attack(const std::string& target);
+};
+
+FragTrap::FragTrap(): ClapTrap("Default") {
+    this->setHitPoint(100);
+    this->setEnergyPoint(100);
+    this->setAttackDamage(30);
+    std::cout << "FragTrap " << this->getName() << " constructed by default." << std::endl;
+}
+
+FragTrap::FragTrap(const std::string& name): ClapTrap(name) {
+    this->setHitPoint(100);
+    this->setEnergyPoint(100);
+    this->setAttackDamage(30);
+    std::cout << "FragTrap " << this->getName() << " conctructed." << std::endl;
+}
+
+FragTrap::~FragTrap() {
+    std::cout << "FragTrap " << this->getName() << " destroyed." << std::endl;
+}
+
+void    FragTrap::attack(const std::string& target) {
+    if (this->getHitPoint() == 0) {
+        std::cout << "Fragtrap " << this->getName() << " Cannot attack due to a lack of hitpoint" << std::endl;
+        return ;
+    }
+    if (this->getEnergyPoint() == 0) {
+        std::cout << "FragTrap " << this->getName() << "cannot attack." << std::endl;
+        return ;
+    }
+    this->setEnergyPoint(this->getEnergyPoint() - 1);
+    std::cout << "FragTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
+}
+
+void FragTrap::highFiveGuys(void) {
+    std::cout << "FragTrap " << this->getName() << " has five guys." << std::endl;
+}
+
+class DiamondTrap: public ScavTrap, public FragTrap {
+    private:
+        std::string name;
+    public:
+        DiamondTrap();
+        DiamondTrap(const std::string& name);
+        ~DiamondTrap();
+        void    attack(const std::string &target);
+        void    whoAmI(void);
+};
+
+DiamondTrap::DiamondTrap(): ClapTrap("Default_clap_name"), ScavTrap(), FragTrap() {
+    this->name = "Default";
+    this->setHitPoint(100);
+    this->setEnergyPoint(50);
+    this->setAttackDamage(30);
+    std::cout << "DiamondTrap " << this->name << " constructed by default." << std::endl;
+}
+
+DiamondTrap::DiamondTrap(const std::string& name): ClapTrap(name + "_clap_name"), ScavTrap(), FragTrap() {
+    this->name = name;
+    this->setHitPoint(100);
+    this->setEnergyPoint(50);
+    this->setAttackDamage(30);
+    std::cout << "DiamondTrap " << this->name << " constructed by default." << std::endl;
+}
+
+DiamondTrap::~DiamondTrap() {
+    std::cout << "DiamondTrap " << this->name << " destroyed." << std::endl;
+}
+
+void    DiamondTrap::attack(const std::string& target) {
+   ScavTrap::attack(target);
+}
+
+void    DiamondTrap::whoAmI(void) {
+    std::cout << "I' m " << this->name << std::endl;
+    std::cout << "My other name " << ClapTrap::getName() << std::endl;
 }
 
 int main(void) {
