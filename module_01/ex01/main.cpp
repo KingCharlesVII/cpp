@@ -6,41 +6,41 @@ class Zombie {
         std::string name;
     public:
         void announce(void);
-        void setName(std::string name);
+        void setName(const std::string& name);
         Zombie();
-        Zombie(const std::string);
+        Zombie(const std::string&);
         ~Zombie();
 };
 
 Zombie  *newZombie(std::string zombie_name);
-Zombie  *zombieHorde(int N, std::string name);
+Zombie  *zombieHorde(int N, const std::string& name);
 void    randomChump(std::string name);
 
 Zombie::Zombie() {
     
 }
 
-void    Zombie::setName(std::string name) {
+void    Zombie::setName(const std::string& name) {
     this->name = name;    
 }
 
-Zombie  *zombieHorde(int N, std::string) {
+Zombie  *zombieHorde(size_t N, const std::string& name) {
     if (N <= 0)
-        return (nullptr);
+        return (NULL);
     Zombie  *zombie_horde = new Zombie[N];
-    for (int i =0; i< N; i++) {
-        zombie_horde[i].setName("Zobmie_" + std::to_string(i));
+    for (size_t i =0; i< N; i++) {
+        zombie_horde[i].setName(name);
     }
     return (zombie_horde);
 }
 
 
-Zombie::Zombie(const std::string zombie_name): name(zombie_name) {
+Zombie::Zombie(const std::string& zombie_name): name(zombie_name) {
     
 }
-
+   
 Zombie::~Zombie() {
-    std::cout << this->name << " is deleted" << std::endl;
+    std::cout << this->name << " destroyed" << std::endl;
 }
 
 void    Zombie::announce(void) {
@@ -63,5 +63,12 @@ int main()
    zombie->announce();
    delete zombie;
    randomChump("StackZombie");
+
+   size_t N = 5;
+   Zombie *horde = zombieHorde(N, "Horde");
+   for (size_t i = 0; i < N; i++) {
+    horde[i].announce();
+    }
+delete[] horde;
     return 0;
 }

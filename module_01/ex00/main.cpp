@@ -13,12 +13,12 @@ class Zombie {
 Zombie  *newZombie(std::string zombie_name);
 void    randomChump(std::string name);
 
-Zombie::Zombie(const std::string zombie_name): name(zombie_name) {
+Zombie::Zombie(const std::string& zombie_name): name(zombie_name) {
     
 }
 
 Zombie::~Zombie() {
-    std::cout << this->name << " is deleted" << std::endl;
+    std::cout << this->name << " destroyed" << std::endl;
 }
 
 void    Zombie::announce(void) {
