@@ -13,9 +13,24 @@ class Fixed {
         void setRawBits(const int raw);
 };
 
-Fixed::Fixed() {
+Fixed::Fixed() : fixedPointValue(0) {
     std::cout << "Default constructor called" << std::endl;
-    this->fixedPointValue = 0;
+}
+
+Fixed::Fixed(const Fixed& fixed) {
+    std::cout << "Copy constructor called" << std::endl;
+    *this = fixed;
+}
+
+Fixed::~Fixed() {
+    std::cout << "Destructor called" << std::endl;
+}
+
+Fixed&  Fixed::operator=(const Fixed& fixed) {
+    std::cout << "Copy assignment operator called" << std::endl;
+    if (this != &fixed)
+        this->fixedPointValue = fixed.getRawBits();
+    return (*this);
 }
 
 int Fixed::getRawBits(void) const {
@@ -25,21 +40,6 @@ int Fixed::getRawBits(void) const {
 
 void Fixed::setRawBits(const int raw) {
     this->fixedPointValue = raw;
-}
-
-Fixed&  Fixed::operator=(const Fixed& fixed) {
-    std::cout << "Copy asignment operator called" << std::endl;
-    this->setRawBits(fixed.getRawBits());
-    return (*this);
-}
-
-Fixed::Fixed(const Fixed& fixed) {
-    std::cout << "Copy constructor called" << std::endl;
-    this->fixedPointValue = fixed.getRawBits();
-}
-
-Fixed::~Fixed() {
-    std::cout << "Destructor called" << std::endl;
 }
 
 int     main(void) {

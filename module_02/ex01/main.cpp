@@ -20,41 +20,12 @@ class Fixed {
     
 std::ostream& operator<<(std::ostream &os, const Fixed &fixed);
 
-Fixed::Fixed() {
+Fixed::Fixed() : fixedPointValue(0) {
     std::cout << "Default constructor called" << std::endl;
-    this->fixedPointValue = 0;
-}
-
-int Fixed::getRawBits(void) const {
-    std::cout << "getRawBits member function called" << std::endl;
-    return (this->fixedPointValue);
-}
-
-void Fixed::setRawBits(const int raw) {
-    this->fixedPointValue = raw;
-}
-
-Fixed&  Fixed::operator=(const Fixed& fixed) {
-    std::cout << "Copy asignment operator called" << std::endl;
-    this->setRawBits(fixed.getRawBits());
-    return (*this);
-}
-
-float   Fixed::toFloat(void) const {
-    return ((float)this->fixedPointValue / (1 << this->fractionalBits));
-}
-
-int Fixed::toInt(void) const {
-    return (this->fixedPointValue >> this->fractionalBits);
-}
-
-Fixed::Fixed(const Fixed& fixed) {
-    std::cout << "Copy constructor called" << std::endl;
-    this->fixedPointValue = fixed.getRawBits();
 }
 
 Fixed::Fixed(const int toConvert) {
-    std::cout << "Int constuctor called" << std::endl;
+    std::cout << "Int constructor called" << std::endl;
     this->fixedPointValue = toConvert << this->fractionalBits;
 }
 
@@ -63,8 +34,38 @@ Fixed::Fixed(const float toConvert) {
     this->fixedPointValue = roundf(toConvert * (1 << this->fractionalBits));
 }
 
+Fixed::Fixed(const Fixed& fixed) {
+    std::cout << "Copy constructor called" << std::endl;
+    this->fixedPointValue = fixed.fixedPointValue;
+}
+
 Fixed::~Fixed() {
     std::cout << "Destructor called" << std::endl;
+}
+
+Fixed&  Fixed::operator=(const Fixed& fixed) {
+    std::cout << "Copy assignment operator called" << std::endl;
+    if (this != &fixed)
+        this->fixedPointValue = fixed.fixedPointValue;
+    return (*this);
+}
+
+int Fixed::getRawBits(void) const {
+    //std::cout << "getRawBits member function called" << std::endl;
+    return (this->fixedPointValue);
+}
+
+void Fixed::setRawBits(const int raw) {
+    this->fixedPointValue = raw;
+}
+
+
+float   Fixed::toFloat(void) const {
+    return ((float)this->fixedPointValue / (1 << this->fractionalBits));
+}
+
+int Fixed::toInt(void) const {
+    return (this->fixedPointValue >> this->fractionalBits);
 }
 
 std::ostream& operator<<(std::ostream &os, const Fixed &fixed) {
