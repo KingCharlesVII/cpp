@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmon_code.a CMakeFiles/mon_code.dir/srcs/main.cpp.o
+/usr/bin/ranlib libmon_code.a
