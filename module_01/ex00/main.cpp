@@ -5,8 +5,8 @@ class Zombie {
     private:
         std::string name;
     public:
-        void announce(void);
-        Zombie(const std::string);
+        void announce(void) const;
+        Zombie(const std::string& zombie_name);
         ~Zombie();
 };
 
@@ -21,7 +21,7 @@ Zombie::~Zombie() {
     std::cout << this->name << " destroyed" << std::endl;
 }
 
-void    Zombie::announce(void) {
+void    Zombie::announce(void) const {
     std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;    
 }
 

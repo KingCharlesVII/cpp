@@ -5,7 +5,7 @@ class Zombie {
     private:
         std::string name;
     public:
-        void announce(void);
+        void announce(void) const;
         void setName(const std::string& name);
         Zombie();
         Zombie(const std::string&);
@@ -13,10 +13,10 @@ class Zombie {
 };
 
 Zombie  *newZombie(std::string zombie_name);
-Zombie  *zombieHorde(int N, const std::string& name);
+Zombie  *zombieHorde(size_t N, const std::string& name);
 void    randomChump(std::string name);
 
-Zombie::Zombie() {
+Zombie::Zombie(): name("") {
     
 }
 
@@ -25,8 +25,6 @@ void    Zombie::setName(const std::string& name) {
 }
 
 Zombie  *zombieHorde(size_t N, const std::string& name) {
-    if (N <= 0)
-        return (NULL);
     Zombie  *zombie_horde = new Zombie[N];
     for (size_t i =0; i< N; i++) {
         zombie_horde[i].setName(name);
@@ -43,7 +41,7 @@ Zombie::~Zombie() {
     std::cout << this->name << " destroyed" << std::endl;
 }
 
-void    Zombie::announce(void) {
+void    Zombie::announce(void) const {
     std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;    
 }
 
