@@ -17,9 +17,8 @@ Fixed::Fixed() : fixedPointValue(0) {
     std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& fixed) {
+Fixed::Fixed(const Fixed& fixed): fixedPointValue(fixed.fixedPointValue) {
     std::cout << "Copy constructor called" << std::endl;
-    *this = fixed;
 }
 
 Fixed::~Fixed() {

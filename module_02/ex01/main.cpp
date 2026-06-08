@@ -34,9 +34,8 @@ Fixed::Fixed(const float toConvert) {
     this->fixedPointValue = roundf(toConvert * (1 << this->fractionalBits));
 }
 
-Fixed::Fixed(const Fixed& fixed) {
+Fixed::Fixed(const Fixed& fixed): fixedPointValue(fixed.fixedPointValue) {
     std::cout << "Copy constructor called" << std::endl;
-    this->fixedPointValue = fixed.fixedPointValue;
 }
 
 Fixed::~Fixed() {
