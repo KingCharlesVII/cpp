@@ -1,7 +1,7 @@
-NAME=Fixed
+NAME=cpp_02_00
 CPP=c++
 CPP_FLAGS=-Wall -Wextra -Werror -std=c++98
-SRCS=main.cpp Fixed.cpp
+SRCS=main.cpp 
 OBJS=$(SRCS:.cpp=.o)
 
 all: $(NAME)

@@ -37,9 +37,9 @@ void    randomChump(std::string name) {
 int main()
 {
     std::string zombie_name = "zzz";
-   Zombie *zombie = newZombie(zombie_name);
-   zombie->announce();
-   delete zombie;
-   randomChump("StackZombie");
+    Zombie *zombie = newZombie(zombie_name);
+    zombie->announce();
+    delete zombie;
+    randomChump("StackZombie");
     return 0;
 }
