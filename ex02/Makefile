@@ -1,6 +1,6 @@
 NAME=Fixed
 CPP=c++
-CPP_FLAGS=-Wall -Wextra -Werror -std=c++98
+CPP_FLAGS=-Wall -Wextra -Werror -no-pie -std=c++98
 SRCS=main.cpp Fixed.cpp
 OBJS=$(SRCS:.cpp=.o)
 

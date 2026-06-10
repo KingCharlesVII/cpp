@@ -35,6 +35,13 @@ Fixed::~Fixed() {
     std::cout << "Destructor called" << std::endl;
 }
 
+int Fixed::getRawBits(void) const {
+    return fixedPointValue;
+}
+void   Fixed::setRawBits(const int raw) {
+    fixedPointValue = raw;
+}
+
 Fixed&  Fixed::operator=(const Fixed& fixed) {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &fixed)
@@ -75,44 +82,52 @@ bool    Fixed::operator!=(const Fixed& fixed) const {
 }
 
 Fixed Fixed::operator+(const Fixed& fixed) const {
-    return Fixed(fixedPointValue + fixed.fixedPointValue);
+    Fixed result;
+    result.setRawBits(fixedPointValue + fixed.fixedPointValue);
+    return result;
 }
 
 Fixed Fixed::operator-(const Fixed& fixed) const {
-    return Fixed(fixedPointValue - fixed.fixedPointValue);
+    Fixed result;
+    result.setRawBits(fixedPointValue - fixed.fixedPointValue);
+    return result;
 }
 
 Fixed Fixed::operator*(const Fixed& fixed) const {
+    Fixed result;
     long temp_fixed = (long)fixedPointValue * fixed.fixedPointValue;
-    return Fixed((int)(temp_fixed >> fractionalBits));
+    result.setRawBits((int)(temp_fixed >> fractionalBits));
+    return result;
 }
 
 Fixed Fixed::operator/(const Fixed& fixed) const {
-    if (fixedPointValue == 0)
+    if (fixed.fixedPointValue == 0)
         return (Fixed(0));
+    Fixed result;
     long temp_fixed = ((long)fixedPointValue << fractionalBits);
-    return Fixed((int)(temp_fixed / fixed.fixedPointValue));
+    result.setRawBits((int)(temp_fixed / fixed.fixedPointValue));
+    return result;
 }
 
 Fixed& Fixed::operator++(void) {
-    fixedPointValue += (1 << fractionalBits);
+    fixedPointValue += 1;
     return (*this);
 }
 
 Fixed Fixed::operator++(int) {
     Fixed result(*this);
-    fixedPointValue += (1 << fractionalBits);
+    fixedPointValue += 1;
     return (result);
 }
 
 Fixed& Fixed::operator--(void) {
-    fixedPointValue -= (1 << fractionalBits);
+    fixedPointValue -= 1;
     return (*this);
 }
 
 Fixed Fixed::operator--(int) {
     Fixed result(*this);
-    fixedPointValue -= (1 << fractionalBits);
+    fixedPointValue -= 1;
     return (result);
 }
 
