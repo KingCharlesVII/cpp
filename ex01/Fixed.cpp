@@ -26,7 +26,7 @@ Fixed::Fixed(const float toConvert) {
     fixedPointValue = roundf(toConvert * (1 << fractionalBits));
 }
 
-Fixed::Fixed(const Fixed& fixed): fixedPointValue(fixed.fixedPointValue) {
+Fixed::Fixed(const Fixed& fixed): fixedPointValue(fixed.getRawBits()) {
     std::cout << "Copy constructor called" << std::endl;
 }
 
@@ -37,13 +37,13 @@ Fixed::~Fixed() {
 Fixed&  Fixed::operator=(const Fixed& fixed) {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &fixed)
-        fixedPointValue = fixed.fixedPointValue;
+        fixedPointValue = fixed.getRawBits();
     return (*this);
 }
 
 int Fixed::getRawBits(void) const {
     //std::cout << "getRawBits member function called" << std::endl;
-    return (this->fixedPointValue);
+    return fixedPointValue;
 }
 
 void Fixed::setRawBits(const int raw) {
@@ -60,5 +60,5 @@ int Fixed::toInt(void) const {
 
 std::ostream& operator<<(std::ostream &os, const Fixed &fixed) {
     os << fixed.toFloat();
-    return (os);
+    return os;
 }

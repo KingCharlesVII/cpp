@@ -16,8 +16,9 @@ Fixed::Fixed() : fixedPointValue(0) {
     std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& fixed): fixedPointValue(fixed.fixedPointValue) {
+Fixed::Fixed(const Fixed& fixed) {
     std::cout << "Copy constructor called" << std::endl;
+    fixedPointValue = fixed.getRawBits();
 }
 
 Fixed::~Fixed() {
