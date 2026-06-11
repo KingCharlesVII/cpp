@@ -9,18 +9,23 @@ class ClapTrap {
         unsigned int attackDamage;
     public:
         ClapTrap();
-        ClapTrap(std::string name);
+        ClapTrap(const std::string& name);
+        ClapTrap(const ClapTrap& other);
         ~ClapTrap();
+        ClapTrap& operator=(const ClapTrap& other);
         void attack(const std::string& target);
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
+
         void setEnergyPoint(unsigned int energyPoint);
         void setAttackDamage(unsigned int attackDamage);
         void setHitPoint(unsigned int hitPoint);
-        std::string getName(void) const;
-        unsigned int getEnergyPoint(void) const;
-        unsigned int getAttackDamage(void) const;
-        unsigned int getHitPoint(void) const;
+        void setName(const std::string& name);
+
+        const std::string& getName() const;
+        unsigned int getEnergyPoint() const;
+        unsigned int getAttackDamage() const;
+        unsigned int getHitPoint() const;
 };
 
 void    ClapTrap::setEnergyPoint(unsigned int energyPoint) {
@@ -35,123 +40,161 @@ void    ClapTrap::setHitPoint(unsigned int hitPoint) {
     this->hitPoint = hitPoint;
 }
 
-unsigned int ClapTrap::getEnergyPoint(void) const {
-    return (this->energyPoint);
-}
-
-unsigned int ClapTrap::getAttackDamage(void) const {
-    return (this->attackDamage);
-}
-
-unsigned int ClapTrap::getHitPoint(void) const {
-    return (this->hitPoint);
-}
-
-std::string ClapTrap::getName(void) const {
-    return (this->name);
-}
-
-ClapTrap::ClapTrap() {
-    this->name = "Default";
-    this->hitPoint = 10;
-    this->energyPoint = 10;
-    this->attackDamage = 0;
-    std::cout << "ClapTrap " << this->getName() << " constructed by default." << std::endl;
-}
-
-ClapTrap::ClapTrap(std::string name) {
-    this->hitPoint = 10;
-    this->energyPoint = 10;
-    this->attackDamage = 0;
+void ClapTrap::setName(const std::string& name) {
     this->name = name;
-    std::cout << "Clap trap " << this->getName() << " contructed" << std::endl;
+}
+
+unsigned int ClapTrap::getEnergyPoint() const {
+    return energyPoint;
+}
+
+unsigned int ClapTrap::getAttackDamage() const {
+    return attackDamage;
+}
+
+unsigned int ClapTrap::getHitPoint() const {
+    return hitPoint;
+}
+
+const std::string& ClapTrap::getName() const {
+    return name;
+}
+
+ClapTrap::ClapTrap(): name("Default"), hitPoint(10), energyPoint(10), attackDamage(0) {
+    std::cout << "ClapTrap " << getName() << " constructed by default" << std::endl;
+}
+
+ClapTrap::ClapTrap(const std::string& name): name(name), hitPoint(10), energyPoint(10), attackDamage(0) {
+    std::cout << "Clap trap " << getName() << " contructed" << std::endl;
 }
 
 ClapTrap::~ClapTrap() {
-    std::cout << "ClapTrap " << this->name << " destroyed." << std::endl;
+    std::cout << "ClapTrap " << getName() << " destroyed" << std::endl;
+}
+
+ClapTrap::ClapTrap(const ClapTrap& other): name(other.getName()), hitPoint(other.getHitPoint()), energyPoint(other.getEnergyPoint()), attackDamage(other.getAttackDamage()) {
+    std::cout << "ClapTrap " << getName() <<"copy contructor called" << std::endl;
+}
+
+ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
+    std::cout << "ClapTrap " << getName() << " assignement operator called" << std::endl;
+    if (this != &other) {
+        setName(other.getName());
+        setHitPoint(other.getHitPoint());
+        setEnergyPoint(other.getEnergyPoint());
+        setAttackDamage(other.getAttackDamage());
+    }
+    return (*this);
 }
 
 void    ClapTrap::beRepaired(unsigned int amount) {
-    if (this->getEnergyPoint() == 0) {
-        std::cout << "Cannot be repaired due to a lack of energy points." << std::endl;
+    if (getEnergyPoint() == 0) {
+        std::cout << "ClapTrap " << getName() << " cannot be repaired due to a lack of energy points" << std::endl;
         return ;
     }
-    if (this->getHitPoint() == 0) {
-        std::cout << "Cannot be repaired due to a lack of hitpoint." << std::endl;
+    if (getHitPoint() == 0) {
+        std::cout << "ClapTrap " << getName() << " cannot be repaired due to a lack of hitpoint" << std::endl;
         return ;
     }
-    this->setEnergyPoint(this->getEnergyPoint() - 1);
-    this->setHitPoint(this->getHitPoint() + amount);
-    std::cout << "ClapTrap " << this->getName() << " repairs itself for " << amount << " hps." << std::endl;
+    setEnergyPoint(this->getEnergyPoint() - 1);
+    setHitPoint(this->getHitPoint() + amount);
+    std::cout << "ClapTrap " << getName() << " repairs itself for " << amount << " hps." << std::endl;
 }
 
 void    ClapTrap::takeDamage(unsigned int amount) {
-    if (this->getHitPoint() == 0) {
+    if (getHitPoint() == 0) {
         std::cout << "ClapTrap " << this->getName() << " is already destroyed" << std::endl;
         return ;
     }
-    if (amount >= this->getHitPoint())
-        this->setHitPoint(0);
+    if (amount >= getHitPoint())
+        setHitPoint(0);
     else
-        this->setHitPoint(this->getHitPoint() - amount);
-    std::cout << "ClapTrap " << this->getName() << " gets " << amount << " damages, remaining: " << this->getHitPoint() <<  std::endl;
+        setHitPoint(getHitPoint() - amount);
+    std::cout << "ClapTrap " << getName() << " gets " << amount << " damages, remaining: " << getHitPoint() << std::endl;
 }
 
 void    ClapTrap::attack(const std::string& target) {
-    if (this->getHitPoint() == 0) {
-        std::cout << "Cannot attack due to a lack of hitpoint" << std::endl;
+    if (getHitPoint() == 0) {
+        std::cout << "ClapTrap " << getName() << "cannot attack " << target << "due to a lack of hitpoint" << std::endl;
         return ;
     }
     if (this->getEnergyPoint() == 0) {
-        std::cout << "ClapTrap " << this->getName() << "cannot attack." << std::endl;
+        std::cout << "ClapTrap " << getName() << "cannot attack " << target << std::endl;
         return ;
     }
-    this->setEnergyPoint(this->getEnergyPoint() - 1);
-    std::cout << "ClapTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
+    setEnergyPoint(getEnergyPoint() - 1);
+    std::cout << "ClapTrap " << this->getName() << " attacks " << target << " causing " << getAttackDamage() << " points of damages!" << std::endl;
 }
 
 class ScavTrap: public ClapTrap {
     public:
         ScavTrap();
         ScavTrap(const std::string& name);
+        ScavTrap(const ScavTrap& other);
         ~ScavTrap();
+        ScavTrap& operator=(const ScavTrap& other);
         void    attack(const std::string& target);
         void    guardGate(void);
+        bool    getGuardingState();
+        void    setGuardingState(bool guarding_state);
+    private:
+        bool is_guarding_gate;
 };
 
-ScavTrap::ScavTrap(): ClapTrap("Default") {
-    this->setHitPoint(100);
-    this->setEnergyPoint(50);
-    this->setAttackDamage(20);
-    std::cout << "ScavTrap " << this->getName() << " constructed by default." << std::endl;
+bool    ScavTrap::getGuardingState() const {
+    return is_guarding_gate;
+}
+ScavTrap::ScavTrap(): ClapTrap(), is_guarding_gate(false) {
+    setHitPoint(100);
+    setEnergyPoint(50);
+    setAttackDamage(20);
+    std::cout << "ScavTrap " << getName() << " constructed by default" << std::endl;
 }
 
-ScavTrap::ScavTrap(const std::string& name): ClapTrap(name) {
-    this->setHitPoint(100);
-    this->setEnergyPoint(50);
-    this->setAttackDamage(20);
-    std::cout << "ScavTrap " << this->getName() << " conctructed." << std::endl;
+ScavTrap::ScavTrap(const std::string& name): ClapTrap(name), is_guarding_gate(false) {
+    setHitPoint(100);
+    setEnergyPoint(50);
+    setAttackDamage(20);
+    std::cout << "ScavTrap " << getName() << " conctructed" << std::endl;
+}
+
+ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other), is_guarding_gate(false) {
+    (void)other;
+    setHitPoint(100);
+    setEnergyPoint(50);
+    setAttackDamage(20);
+    std::cout << "ScavTrap " << getName() << " conctructed" << std::endl;
 }
 
 ScavTrap::~ScavTrap() {
-    std::cout << "ScavTrap " << this->getName() << " destroyed." << std::endl;
+    std::cout << "ScavTrap " << getName() << " destroyed." << std::endl;
+}
+
+ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
+    if (this != &other) {
+        setHitPoint(other.getHitPoint());
+        setEnergyPoint(other.getEnergyPoint());
+        setAttackDamage(other.getAttackDamage());
+        setName(other.getName());
+    }
+    return (*this);
 }
 
 void    ScavTrap::attack(const std::string& target) {
-    if (this->getHitPoint() == 0) {
-        std::cout << "Scavtrap " << this->getName() << " Cannot attack due to a lack of hitpoint" << std::endl;
+    if (getHitPoint() == 0) {
+        std::cout << "Scavtrap " << getName() << " Cannot attack due to a lack of hitpoint" << std::endl;
         return ;
     }
-    if (this->getEnergyPoint() == 0) {
-        std::cout << "ScavTrap " << this->getName() << "cannot attack." << std::endl;
+    if (getEnergyPoint() == 0) {
+        std::cout << "ScavTrap " << getName() << "cannot attack." << std::endl;
         return ;
     }
-    this->setEnergyPoint(this->getEnergyPoint() - 1);
-    std::cout << "ScavTrap " << this->getName() << " attacks " << target << " causing " << this->getAttackDamage() << " points of damages!" << std::endl;
+    setEnergyPoint(getEnergyPoint() - 1);
+    std::cout << "ScavTrap " << getName() << " attacks " << target << " causing " << getAttackDamage() << " points of damages!" << std::endl;
 }
 
 void    ScavTrap::guardGate(void) {
-    std::cout << "ScavTrap " << this->getName() << " is now keeping the gate." << std::endl;
+    std::cout << "ScavTrap " << getName() << " is now keeping the gate." << std::endl;
 }
 
 int main(void) {
