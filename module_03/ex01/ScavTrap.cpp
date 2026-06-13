@@ -1,32 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmurzi <gmurzi@learner.42.tech>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/13 10:48:08 by gmurzi            #+#    #+#             */
+/*   Updated: 2026/06/13 10:48:09 by gmurzi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScavTrap.hpp"
 
-bool    ScavTrap::getGuardingState() const {
-    return is_guarding_gate;
-}
 ScavTrap::ScavTrap(): ClapTrap(), is_guarding_gate(false) {
     setHitPoint(100);
     setEnergyPoint(50);
     setAttackDamage(20);
-    std::cout << "ScavTrap " << getName() << " constructed by default" << std::endl;
+    std::cout << "ScavTrap " << getName() << ": call the default constructor" << std::endl;
 }
 
 ScavTrap::ScavTrap(const std::string& name): ClapTrap(name), is_guarding_gate(false) {
     setHitPoint(100);
     setEnergyPoint(50);
     setAttackDamage(20);
-    std::cout << "ScavTrap " << getName() << " conctructed" << std::endl;
+    std::cout << "ScavTrap " << getName() << ": call te overloaded constructor" << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other), is_guarding_gate(false) {
-    (void)other;
-    setHitPoint(100);
-    setEnergyPoint(50);
-    setAttackDamage(20);
-    std::cout << "ScavTrap " << getName() << " conctructed" << std::endl;
+ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
+    setHitPoint(other.getHitPoint());
+    setEnergyPoint(other.getEnergyPoint());
+    setAttackDamage(other.getAttackDamage());
+    std::cout << "ScavTrap " << getName() << ": call the copy constructor" << std::endl;
 }
 
 ScavTrap::~ScavTrap() {
-    std::cout << "ScavTrap " << getName() << " destroyed." << std::endl;
+    std::cout << "ScavTrap " << getName() << ": destroy" << std::endl;
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
@@ -41,17 +49,34 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
 
 void    ScavTrap::attack(const std::string& target) {
     if (getHitPoint() == 0) {
-        std::cout << "Scavtrap " << getName() << " Cannot attack due to a lack of hitpoint" << std::endl;
+        std::cout << "ScavTrap " << getName() << ": cannot do anything to " << target << " due to a lack of hitpoint" << std::endl;
         return ;
     }
     if (getEnergyPoint() == 0) {
-        std::cout << "ScavTrap " << getName() << "cannot attack." << std::endl;
+        std::cout << "ScavTrap " << getName() << ": cannot do anything to " << target << "due to a lack of energypoint" << std::endl;
         return ;
     }
     setEnergyPoint(getEnergyPoint() - 1);
-    std::cout << "ScavTrap " << getName() << " attacks " << target << " causing " << getAttackDamage() << " points of damages!" << std::endl;
+    std::cout << "ScavTrap " << getName() << ": attacks " << target << " causing " << getAttackDamage() << " points of damages!" << std::endl;
 }
 
-void    ScavTrap::guardGate(void) {
-    std::cout << "ScavTrap " << getName() << " is now keeping the gate." << std::endl;
+bool ScavTrap::getGuardingState() const {
+    return is_guarding_gate;
+}
+
+void    ScavTrap::setGuardingState(bool guarding_state) {
+    is_guarding_gate = guarding_state;
+}
+
+void    ScavTrap::guardGate() {
+    if (getHitPoint() == 0) {
+        std::cout << "ScavTrap " << getName() << ": cannot keep the gate for it is already destroyed" << std::endl;
+        return ;
+    }
+    if (getGuardingState()) {
+        std::cout << "ScavTrap " << getName() << ": already keeping the gate" << std::endl;
+        return ;
+    }
+    setGuardingState(true);
+    std::cout << "ScavTrap " << getName() << ": keep the gate" << std::endl;
 }
