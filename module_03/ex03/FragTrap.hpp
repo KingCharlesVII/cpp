@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmurzi <gmurzi@learner.42.tech>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/13 11:59:17 by gmurzi            #+#    #+#             */
-/*   Updated: 2026/06/13 11:59:20 by gmurzi           ###   ########.fr       */
+/*   Created: 2026/06/13 11:17:47 by gmurzi            #+#    #+#             */
+/*   Updated: 2026/06/13 11:17:48 by gmurzi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#pragma once
+
 #include <string>
+#include <iostream>
 
-#include "DiamondTrap.hpp"
+#include "ClapTrap.hpp"
 
-int main(void) {
-    DiamondTrap d1("D1");
-    DiamondTrap d2(d1);
-
-    d2.attack(d1.getName());
-    d1.takeDamage(d2.getAttackDamage());
-}
+class FragTrap: virtual public ClapTrap {
+    public:
+        FragTrap();
+        FragTrap(const std::string& name);
+        FragTrap(const FragTrap& other);
+        ~FragTrap();
+        FragTrap& operator=(const FragTrap& other);
+        void    highFiveGuys(void);
+        void    attack(const std::string& target);
+};
