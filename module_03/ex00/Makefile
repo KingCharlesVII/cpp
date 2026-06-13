@@ -1,7 +1,7 @@
-NAME=cpp_02_00
-CPP=c++
-CPP_FLAGS=-Wall -Wextra -Werror -std=c++98
-SRCS=main.cpp 
+NAME=claptrap
+CPP=g++
+CPP_FLAGS=-std=c++98 -Wall -Wextra -Werror 
+SRCS=main.cpp ClapTrap.cpp
 OBJS=$(SRCS:.cpp=.o)
 
 all: $(NAME)
