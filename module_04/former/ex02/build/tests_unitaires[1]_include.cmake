@@ -1,0 +1,5 @@
+if(EXISTS "/home/mvrzl/code/personal/c/work/C/milestone_4/Cpp_git/module_04/ex01/build/tests_unitaires[1]_tests.cmake")
+  include("/home/mvrzl/code/personal/c/work/C/milestone_4/Cpp_git/module_04/ex01/build/tests_unitaires[1]_tests.cmake")
+else()
+  add_test(tests_unitaires_NOT_BUILT tests_unitaires_NOT_BUILT)
+endif()
