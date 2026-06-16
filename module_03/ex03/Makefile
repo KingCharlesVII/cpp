@@ -1,5 +1,5 @@
 NAME=diamondtrap
-CPP=g++
+CPP=c++
 CPP_FLAGS=-std=c++98 -Wall -Wextra -Werror 
 SRCS=main.cpp FragTrap.cpp ClapTrap.cpp ScavTrap.cpp DiamondTrap.cpp
 OBJS=$(SRCS:.cpp=.o)
