@@ -27,6 +27,7 @@ ScavTrap::ScavTrap(const std::string& name): ClapTrap(name), is_guarding_gate(fa
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other) {
+    setGuardingState(other.getGuardingState());
     std::cout << "ScavTrap " << getName() << ": call the copy constructor" << std::endl;
 }
 
@@ -35,6 +36,7 @@ ScavTrap::~ScavTrap() {
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
+    std::cout << "ScavTrap " << getName() << ": call assignement operator" << std::endl;
     if (this != &other) {
         ClapTrap::operator=(other);
         setGuardingState(other.getGuardingState());

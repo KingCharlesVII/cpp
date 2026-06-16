@@ -29,4 +29,8 @@ int main(void) {
     s2.setGuardingState(true);
     s2.guardGate();
     s1.guardGate();
+
+    ScavTrap s3(s2);
+    s3.setName("S3");
+    s3.guardGate();
 }
