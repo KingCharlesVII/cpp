@@ -22,10 +22,12 @@ int main() {
         Cat cat = Cat();
         cat.makeSound();
     }
+    std::cout << std::endl;
     {
         Dog dog = Dog();
         dog.makeSound();
     }
+    std::cout << std::endl;
     {
         std::cout << "NEW TEST" << std::endl;
         const Animal* j = new Dog();
@@ -46,14 +48,17 @@ int main() {
                 delete animals[index];
         }
     }
+    std::cout << std::endl;
     {
         Cat cat = Cat();
         Cat meow = Cat(cat);
     }
+    std::cout << std::endl;
     {
         Dog dog = Dog();
         Dog woof = Dog(dog);
     }
+    std::cout << std::endl;
     {
         Cat cat = Cat();
         Cat meow = Cat(cat);
