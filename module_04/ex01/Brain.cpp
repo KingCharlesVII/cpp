@@ -29,7 +29,7 @@ Brain& Brain::operator=(const Brain& other) {
     std::cout << "Brain assignement operator called" << std::endl;
     if (this != &other)
         for (std::size_t index = 0; index < MAX_CELLS; index++)
-            ideas[index] = std::string(other.ideas[index]);
+            ideas[index] = std::string(other.getIdea(index));
     return *this;
 }
 

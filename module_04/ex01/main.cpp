@@ -22,10 +22,12 @@ int main() {
         Cat cat = Cat();
         cat.makeSound();
     }
+    std::cout << std::endl;
     {
         Dog dog = Dog();
         dog.makeSound();
     }
+    std::cout << std::endl;
     {
         const Animal* meta = new Animal();
         const Animal* j = new Dog();
@@ -35,7 +37,11 @@ int main() {
         i->makeSound(); //will output the cat sound!
         j->makeSound();
         meta->makeSound();
+        delete meta;
+        delete j;
+        delete i;
     }
+    std::cout << std::endl;
     {
         std::cout << "NEW TEST" << std::endl;
         const Animal* j = new Dog();
@@ -56,18 +62,25 @@ int main() {
                 delete animals[index];
         }
     }
+    std::cout << std::endl;
     {
         Cat cat = Cat();
         Cat meow = Cat(cat);
     }
+    std::cout << std::endl;
     {
         Dog dog = Dog();
         Dog woof = Dog(dog);
     }
+    std::cout << std::endl;
     {
         Cat cat = Cat();
         Cat meow = Cat(cat);
         cat.getBrain()->setIdea("eating", 0);
-        meow.getBrain()->setIdea("eating", 0);
+        meow.getBrain()->setIdea("sleeping", 0);
+        std::cout << cat.getBrain()->getIdea(0) << std::endl;
+        std::cout << meow.getBrain()->getIdea(0) << std::endl;
+        meow = cat;
+         std::cout << meow.getBrain()->getIdea(0) << std::endl;
     }
 }
