@@ -23,6 +23,7 @@ class WrongAnimal {
         WrongAnimal& operator=(const WrongAnimal& other);
         void makeSound() const;
         const std::string& getType() const;
+        void setType(const std::string& type);
     protected:
         std::string type;
 };

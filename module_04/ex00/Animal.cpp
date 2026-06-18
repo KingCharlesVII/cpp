@@ -16,9 +16,8 @@ Animal::Animal(): type("Random") {
     std::cout << "Animal default constructor called: " << getType() <<std::endl;
 }
 
-Animal::Animal(const Animal& other) {
+Animal::Animal(const Animal& other): type(other.getType()) {
     std::cout << "Animal copy constructor called: " << getType() << std::endl;
-    *this = other;
 }
 
 Animal::~Animal() {
@@ -38,4 +37,8 @@ void Animal::makeSound() const {
 
 const std::string& Animal::getType() const {
     return type;
+}
+
+void   Animal::setType(const std::string& type) {
+    this->type = type;
 }
