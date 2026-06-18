@@ -13,27 +13,27 @@
 #include "Animal.hpp"
 
 Animal::Animal(): type("Random") {
-    std::cout << "Animal default constructor called" << std::endl;
+    std::cout << "Animal default constructor called: " << getType() <<std::endl;
 }
 
 Animal::Animal(const Animal& other) {
-    std::cout << "Animal copy constructor called" << std::endl;
+    std::cout << "Animal copy constructor called: " << getType() << std::endl;
     *this = other;
 }
 
 Animal::~Animal() {
-    std::cout << "Animal destructor called" << std::endl;
+    std::cout << "Animal destructor called: " << getType() << std::endl;
 }
 
 Animal& Animal::operator=(const Animal& other) {
-    std::cout << "Animal assignement operator called" << std::endl;
+    std::cout << "Animal assignement operator called: " << getType() << std::endl;
     if (this != &other)
-        type = other.type;
+        type = other.getType();
     return *this;
 }
 
 void Animal::makeSound() const {
-    std::cout << "Random sound" << std::endl;
+    std::cout << "Animal: " << getType() << ": random sound" << std::endl;
 }
 
 const std::string& Animal::getType() const {
