@@ -12,8 +12,11 @@ class Array {
         ~Array();
         Array& operator=(const Array& other);
         const T& operator[](unsigned int index) const;
+        T& operator[](unsigned int index);
         unsigned int size() const;
     private:
         T* data;
         unsigned int _size;
 };
+
+#include "Array.tpp"

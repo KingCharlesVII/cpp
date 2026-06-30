@@ -51,5 +51,26 @@ void    print_success() {
 #define Size(array) (sizeof(array) / sizeof(array[0]))
 
 int main( void ) {
+    {
+        try {
+            Array<std::string> array(3);
+            array[0] = std::string("Hello");
+            array[1] = std::string("world");
+            array[2] = std::string("!");
 
+            Array<std::string> array_deep_copy(array);
+            for (std::string::size_type index(0); index < array_deep_copy.size(); index++) {
+                std::cout << std::string(array_deep_copy[index]) << " ";
+            }
+            std::cout << std::endl;
+        } catch(const std::bad_alloc& e) {
+            std::cerr << e.what() << std::endl;
+        }
+        try {
+            Array<std::string> array(2);
+            array[3] = 2;
+        } catch (const std::out_of_range& e) {
+            std::cerr << e.what() << std::endl;
+        }
+    }
 }

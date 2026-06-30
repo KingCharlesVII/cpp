@@ -1,7 +1,7 @@
 NAME=array
 CPP=c++
-CPP_FLAGS=-Wall -Wextra -Werror -std=c++98
-SRCS=main.cpp Array.hpp Array.cpp
+CPP_FLAGS=-g -Wall -Wextra -Werror -std=c++98
+SRCS=main.cpp
 OBJS=$(SRCS:.cpp=.o)
 
 all: $(NAME)
