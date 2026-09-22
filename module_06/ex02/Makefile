@@ -1,4 +1,4 @@
-NAME=animal
+NAME=type
 CPP=c++
 CPP_FLAGS=-std=c++98 -Wall -Wextra -Werror 
 SRCS=main.cpp A.cpp B.cpp C.cpp Base.cpp

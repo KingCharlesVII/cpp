@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmurzi <gmurzi@learner.42.tech>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/22 11:37:40 by gmurzi            #+#    #+#             */
+/*   Updated: 2026/09/22 11:37:42 by gmurzi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -18,6 +30,8 @@ Base *generate(void) {
             return (new A());
         case 1:
             return (new B());
+        case 2:
+            return (new C());
         default:
             return NULL;
     }
