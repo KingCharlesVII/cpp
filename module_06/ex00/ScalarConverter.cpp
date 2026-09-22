@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmurzi <gmurzi@learner.42.tech>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/22 11:14:25 by gmurzi            #+#    #+#             */
+/*   Updated: 2026/09/22 11:14:26 by gmurzi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScalarConverter.hpp"
 
 ScalarConverter::ScalarConverter() {
@@ -84,7 +96,7 @@ bool    checkSymbolPosition(const std::string& representation) {
 bool    checkNumber(const std::string& representation) {
     if(representation.empty())
         return false;
-    if (representation.size() == 1)
+    if (representation.size() == 1 && !std::isdigit(representation[0]) && representation[0] != '+' && representation[0] != '-' && representation[0] != '.' && representation[0] != 'f')
         return true;
     if (isMathSymbol(representation))
         return true;
@@ -169,11 +181,11 @@ void ScalarConverter::convert(const std::string& representation) {
     }
     {
         if (charOverFlow)
-            printChar(static_cast<char>(value), true);
+            printChar(0, true);
         else
             printChar(static_cast<char>(value));
         if (intOverFlow)
-            printInt(static_cast<int>(value), true);
+            printInt(0, true);
         else
             printInt(static_cast<int>(value));
         if (floatOverFlow)
