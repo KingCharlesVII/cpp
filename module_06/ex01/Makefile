@@ -1,4 +1,4 @@
-NAME=animal
+NAME=serializer
 CPP=c++
 CPP_FLAGS=-std=c++98 -Wall -Wextra -Werror 
 SRCS=main.cpp Serializer.cpp
