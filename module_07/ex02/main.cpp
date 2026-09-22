@@ -5,52 +5,31 @@
 
 #include "Array.hpp"
 
-static std::size_t tests;
-
-void    print_success() {
-    std::cout << "Test " << tests << " passed" << std::endl;
-    tests++;
-}
-
-#define ASSERT_EQ(actual, expected) \
-    do { \
-        if (actual != expected) {\
-            std::cout << "[Error]: " << actual << " is different from " << expected << std::endl; \
-            std::exit(1); \
-        } \
-        print_success(); \
-    }   while (0)
-
-#define ASSERT_NE(actual, expected) \
-    do { \
-        if (actual == expected) {\
-            std::cout << "[Error]: " << actual << " is equal to " << expected << std::endl; \
-            std::exit(1); \
-        } \
-        print_success(); \
-    }   while (0)
-
-#define ASSERT_TRUE(actual) \
-    do { \
-        if (actual == false) {\
-            std::cout << "[Error]: " << actual << " is false" << std::endl; \
-            std::exit(1); \
-        } \
-        print_success(); \
-    }   while (0)
-
-#define ASSERT_FALSE(actual) \
-    do { \
-        if (actual == true) {\
-            std::cout << "[Error]: " << actual << " is true" << std::endl; \
-            std::exit(1); \
-        } \
-        print_success(); \
-    }   while (0)
-
-#define Size(array) (sizeof(array) / sizeof(array[0]))
-
 int main( void ) {
+    try {
+    Array<int> empty;
+
+            std::cout << "Empty array size: " << empty.size() << std::endl;
+
+            try {
+                empty[0] = 42;
+            } catch (const std::out_of_range& e) {
+                std::cerr << e.what() << std::endl;
+            }
+
+            Array<int> array(5);
+
+            for (unsigned int index(0); index < array.size(); index++)
+                array[index] = index + 1;
+
+            std::cout << "Array size: " << array.size() << std::endl;
+
+            for (unsigned int index(0); index < array.size(); index++)
+                std::cout << array[index] << " ";
+            std::cout << std::endl;
+        } catch(const std::bad_alloc& e) {
+            std::cerr << e.what() << std::endl;
+    }
     {
         try {
             Array<std::string> array(3);
