@@ -1,64 +1,91 @@
 #include <iostream>
-#include <string>
+#include <vector>
 #include <cstdlib>
 #include <exception>
-#include <vector>
 
-#include "easyfind.hpp"
-
-#define Size(array) (sizeof(array) / sizeof(array[0]))
-#define ListBegin(array) (array)
-#define ListEnd(array) (ListBegin(array) + Size(array))
+#include "Span.hpp"
 
 int main() {
     {
-        int array[] = {
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-        };
         try {
-            std::vector<int> vect(ListBegin(array), ListEnd(array));
-            std::vector<int>::iterator it(easyfind(vect, 6));
+            Span span(5);
+
+            span.addNumber(6);
+            span.addNumber(3);
+            span.addNumber(17);
+            span.addNumber(9);
+            span.addNumber(11);
+
+            std::cout << "Shortest span: " << span.shortestSpan() << std::endl;
+            std::cout << "Longest span: " << span.longestSpan() << std::endl;
         } catch(const std::exception& e) {
             std::cout << "1) " << e.what() << std::endl;
         }
+    }
+
+    {
+        try {
+            Span span(2);
+
+            span.addNumber(10);
+            span.addNumber(20);
+
+            std::cout << "Shortest span: " << span.shortestSpan() << std::endl;
+            std::cout << "Longest span: " << span.longestSpan() << std::endl;
+
+            span.addNumber(30);
+        } catch(const std::exception& e) {
+            std::cout << "2) " << e.what() << std::endl;
         }
-            {
-            int array[] = {
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-            };
-            try {
-                const std::vector<int> vect(ListBegin(array), ListEnd(array));
-                std::vector<int>::const_iterator it(easyfind(vect, 6));
-            } catch(const std::exception& e) {
-                std::cout << "2) " <<  e.what() << std::endl;
-            }
+    }
+
+    {
+        try {
+            Span span(1);
+
+            span.addNumber(42);
+
+            std::cout << "Shortest span: " << span.shortestSpan() << std::endl;
+        } catch(const std::exception& e) {
+            std::cout << "3) " << e.what() << std::endl;
         }
-        {
-            int array[] = {
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-            };
-            try {
-                const std::vector<int> vect(ListBegin(array), ListEnd(array));
-                std::vector<int>::const_iterator it(easyfind(vect, 5));
-                std::cout << "3) " << "Value found is at index: " << *it << std::endl;
-            } catch(const std::exception& e) {
-                std::cout << "3) " <<  e.what() << std::endl;
-            }
+    }
+
+    {
+        try {
+            Span span(10);
+
+            std::vector<int> numbers;
+
+            numbers.push_back(1);
+            numbers.push_back(100);
+            numbers.push_back(50);
+            numbers.push_back(25);
+            numbers.push_back(75);
+
+            span.addNumber(numbers.begin(), numbers.end());
+
+            std::cout << "Shortest span: " << span.shortestSpan() << std::endl;
+            std::cout << "Longest span: " << span.longestSpan() << std::endl;
+        } catch(const std::exception& e) {
+            std::cout << "4) " << e.what() << std::endl;
         }
-        
+    }
+
+    {
+        try {
+            Span span(3);
+
+            std::vector<int> numbers;
+
+            numbers.push_back(1);
+            numbers.push_back(2);
+            numbers.push_back(3);
+            numbers.push_back(4);
+
+            span.addNumber(numbers.begin(), numbers.end());
+        } catch(const std::exception& e) {
+            std::cout << "5) " << e.what() << std::endl;
+        }
+    }
 }
